@@ -1,8 +1,8 @@
 import React from 'react'
 
-export const FormRow = ({ type, name, value, onInputChange, labelText }) => {
+export const FormRow = ({ type, name, value, onInputChange, labelText, placeholder }) => {
     return (
-        <div>
+        <div className='form-row'>
             <label
                 htmlFor={name}
                 className='form-label'>
@@ -14,6 +14,7 @@ export const FormRow = ({ type, name, value, onInputChange, labelText }) => {
                 value={value}
                 onChange={onInputChange}
                 className='form-input'
+                placeholder={placeholder}
             />
         </div>
     )

@@ -2,6 +2,7 @@ import { Logo, FormRow } from "../components";
 import { useForm } from '../hooks'
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { useState } from "react";
+import { toast } from 'react-toastify'
 
 const formData = {
   name: '',
@@ -11,11 +12,14 @@ const formData = {
 
 export const Register = () => {
   const [isMember, setIsMember] = useState(false);
-  const { email, password, name, onInputChange, onResetForm } = useForm(formData);
+  const { email, password, name, onInputChange, onResetForm, isFormValid } = useForm(formData);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if(!email || !password || (!isMember && !name)) throw new Error('Fill al the fields properly')
+    if (!email || !password || (!isMember && !name)){
+      console.log('hi');
+      toast.error('Please Fill Out All Fields.')
+    }
   }
 
   const toggleMember = (e) => {

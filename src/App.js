@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing, Error, Register, Dashboard } from "./pages";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const App = () => {
   return (

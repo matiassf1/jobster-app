@@ -3,23 +3,34 @@ import { useForm } from '../hooks'
 import Wrapper from "../assets/wrappers/RegisterPage";
 import { useState } from "react";
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from "react-redux";
+import { loginThunk, registerThunk } from "../store";
 
 const formData = {
   name: '',
-  email: '',
-  password: ''
+  email: 'testin@mail.com',
+  password: '1231231233'
 }
 
 export const Register = () => {
   const [isMember, setIsMember] = useState(false);
   const { email, password, name, onInputChange, onResetForm, isFormValid } = useForm(formData);
 
+  const dispatch = useDispatch();
+  const { isLoading, user } = useSelector((store) => store.user);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password || (!isMember && !name)){
+    if (!email || !password || (!isMember && !name)) {
       console.log('hi');
-      toast.error('Please Fill Out All Fields.')
+      toast.error('Please Fill Out All Fields.');
     }
+    if (isMember) {
+      dispatch(loginThunk({email, password}));
+      return
+    }
+
+    dispatch(registerThunk({name, email, password}));
   }
 
   const toggleMember = (e) => {

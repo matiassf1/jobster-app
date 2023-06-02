@@ -4,16 +4,23 @@ import { toggleSideBar } from '../store/jobs/sideBarSlice'
 import { Logo } from './Logo'
 import Wrapper from '../assets/wrappers/Navbar'
 import { FaAlignLeft, FaCaretDown, FaUserCircle } from 'react-icons/fa'
+import { logout } from '../store/user/userSlice'
 
 export const NavBar = () => {
     const [showLogout, setShowLogout] = useState(false);
 
     const { user } = useSelector((store) => store.user);
+    const { isSideBarOpen } = useSelector((store) => store.sidebar);
     const dispatch = useDispatch();
 
     const toggle = (() => {
         dispatch(toggleSideBar());
     })
+
+    const handleLogout = () => {
+        dispatch(logout);
+        if (isSideBarOpen) toggle();
+    }
     return (
         <Wrapper>
             <div className='nav-center'>
@@ -42,7 +49,7 @@ export const NavBar = () => {
                         <button
                             type='button'
                             className='dropdown-btn'
-                            onClick={() => console.log('logout user')}
+                            onClick={() => handleLogout()}
                         >logout</button>
                     </div>
                 </div>

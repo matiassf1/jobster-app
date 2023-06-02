@@ -1,12 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify'
-import { registerUser, loginUser, addUserToLocalStorage } from './thunks';
+import { registerUser, loginUser, addUserToLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from './thunks';
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
         isLoading: false,
-        user: null
+        user: getUserFromLocalStorage()
+    },
+    reducers: {
+        logout: (state) => {
+            state.user = null;
+            removeUserFromLocalStorage();
+        }
     },
     extraReducers: {
         [loginUser.pending]: (state, { payload }) => {

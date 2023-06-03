@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify'
-import { registerUser, loginUser  } from './thunks';
+import { registerUser, loginUser, updateUser } from './thunks';
 import { removeUserFromLocalStorage, getUserFromLocalStorage, addUserToLocalStorage } from '../../utils/localStorage';
 
 export const userSlice = createSlice({
@@ -14,7 +14,7 @@ export const userSlice = createSlice({
             console.log('hi');
             state.user = null;
             removeUserFromLocalStorage();
-        }
+        },
     },
     extraReducers: {
         [loginUser.pending]: (state, { payload }) => {
@@ -43,7 +43,20 @@ export const userSlice = createSlice({
             addUserToLocalStorage(payload);
             toast.success(`Hello there ${payload.name}`);
         },
+        [updateUser.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [updateUser.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            toast.error(payload);
+        },
+        [updateUser.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.user = payload;
+            addUserToLocalStorage(payload);
+            toast.success(`${payload.name} your profile have been updated`);
+        },
     }
 });
 
-export const { login, logout, register, loading } = userSlice.actions;
+export const { logout } = userSlice.actions;

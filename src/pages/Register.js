@@ -41,16 +41,7 @@ export const Register = () => {
     if (!password) {
       toast.error('Please enter a password.');
       return;
-    } else {
-      // Validación de complejidad de la contraseña
-      // La contraseña debe tener al menos 8 caracteres y contener al menos una letra y un número
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      if (!passwordRegex.test(password)) {
-        toast.error('Please enter a password with at least 8 characters, including at least one letter and one number.');
-        return;
-      }
-    }
-
+    } 
     if (!isMember && !name) {
       toast.error('Please enter a name if you are not a member.');
       return;

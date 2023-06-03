@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleSideBar } from '../store/jobs/sideBarSlice'
+import { logout } from '../store/user/userSlice'
 import { Logo } from './Logo'
 import Wrapper from '../assets/wrappers/Navbar'
 import { FaAlignLeft, FaCaretDown, FaUserCircle } from 'react-icons/fa'
-import { logout } from '../store/user/userSlice'
 
 export const NavBar = () => {
     const [showLogout, setShowLogout] = useState(false);
@@ -18,8 +18,8 @@ export const NavBar = () => {
     })
 
     const handleLogout = () => {
-        dispatch(logout);
-        if (isSideBarOpen) toggle();
+        dispatch(logout());
+        if (isSideBarOpen) dispatch(toggleSideBar());
     }
     return (
         <Wrapper>

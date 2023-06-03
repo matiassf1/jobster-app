@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify'
-import { registerUser, loginUser, addUserToLocalStorage, getUserFromLocalStorage, removeUserFromLocalStorage } from './thunks';
+import { registerUser, loginUser  } from './thunks';
+import { removeUserFromLocalStorage, getUserFromLocalStorage, addUserToLocalStorage } from '../../utils/localStorage';
 
 export const userSlice = createSlice({
     name: 'user',
@@ -10,6 +11,7 @@ export const userSlice = createSlice({
     },
     reducers: {
         logout: (state) => {
+            console.log('hi');
             state.user = null;
             removeUserFromLocalStorage();
         }

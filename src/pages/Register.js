@@ -22,18 +22,46 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password || (!isMember && !name)) {
-      toast.error('Please Fill Out All Fields.');
-      return
+    // Validación del campo de email
+    if (!email) {
+      toast.error('Please enter an email.');
+      return;
+    } else {
+      // Expresión regular para validar el formato del email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        toast.error('Please enter a valid email.');
+        return;
+      }
     }
+
+    // Validación del campo de contraseña
+    if (!password) {
+      toast.error('Please enter a password.');
+      return;
+    } else {
+      // Validación de complejidad de la contraseña
+      // La contraseña debe tener al menos 8 caracteres y contener al menos una letra y un número
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        toast.error('Please enter a password with at least 8 characters, including at least one letter and one number.');
+        return;
+      }
+    }
+
+    if (!isMember && !name) {
+      toast.error('Please enter a name if you are not a member.');
+      return;
+    }
+
     if (isMember) {
-      dispatch(loginUser({email, password}));
+      dispatch(loginUser({ email, password }));
       return
     }
 
-    dispatch(registerUser({name, email, password}));
+    dispatch(registerUser({ name, email, password }));
   }
 
   const toggleMember = (e) => {
@@ -42,13 +70,13 @@ export const Register = () => {
   }
 
   useEffect(() => {
-    if(user) navigate('/');
+    if (user) navigate('/');
   }, [user]);
-  
+
 
   return (
     <Wrapper className="full-page">
-      <form className="form" onSubmit={onSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
 
         <Logo />
         <h3>{isMember ? 'Login' : 'Register'}</h3>

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { getUserFromLocalStorage } from '../../utils/localStorage';
 import { createJob } from './thunks';
 
 const initialState = {

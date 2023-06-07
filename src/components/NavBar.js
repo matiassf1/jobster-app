@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleSideBar } from '../store/jobs/sideBarSlice'
+import { toggleSideBar } from '../store/sideBarSlice'
 import { logout } from '../store/user/userSlice'
 import { Logo } from './Logo'
 import Wrapper from '../assets/wrappers/Navbar'

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Wrapper from '../assets/wrappers/BigSidebar'
-import { toggleSideBar } from '../store/jobs/sideBarSlice';
+import { toggleSideBar } from '../store/sideBarSlice';
 import { Logo } from './Logo';
 import { NavLinks } from './NavLinks';
 

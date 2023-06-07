@@ -4,3 +4,4 @@ export * from './BigSideBar';
 export * from './NavBar';
 export * from './SmallSideBar';
 export * from './NavLinks';
+export * from './FormRowSelect';

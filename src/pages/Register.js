@@ -15,7 +15,7 @@ const formData = {
 
 export const Register = () => {
   const [isMember, setIsMember] = useState(false);
-  const { email, password, name, onInputChange, onResetForm, isFormValid } = useForm(formData);
+  const { email, password, name, onInputChange } = useForm(formData);
 
   const dispatch = useDispatch();
   const { isLoading, user } = useSelector((store) => store.user);
@@ -49,7 +49,7 @@ export const Register = () => {
 
     if (isMember) {
       dispatch(loginUser({ email, password }));
-      return
+      return;
     }
 
     dispatch(registerUser({ name, email, password }));

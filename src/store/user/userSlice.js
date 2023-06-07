@@ -11,13 +11,12 @@ export const userSlice = createSlice({
     },
     reducers: {
         logout: (state) => {
-            console.log('hi');
             state.user = null;
             removeUserFromLocalStorage();
         },
     },
     extraReducers: {
-        [loginUser.pending]: (state, { payload }) => {
+        [loginUser.pending]: (state) => {
             state.isLoading = true;
         },
         [loginUser.rejected]: (state, { payload }) => {

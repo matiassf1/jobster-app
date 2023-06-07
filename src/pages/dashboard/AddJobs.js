@@ -1,9 +1,10 @@
-import { FormRow } from "../../components/FormRow";
+import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useSelector, useDispatch } from "react-redux";
-import { useForm } from "../../hooks/useForm"
+import { clearValues, handleChange } from "../../store/jobs/jobSlide";
 
 import { toast } from 'react-toastify';
+import { createJob } from "../../store/jobs/thunks";
 
 export const AddJobs = () => {
 
@@ -12,9 +13,9 @@ export const AddJobs = () => {
     position,
     company,
     jobLocation,
-    jobTypeOption,
+    jobTypeOptions,
     jobType,
-    statusOption,
+    statusOptions,
     status,
     isEditing,
     editJobId
@@ -22,67 +23,83 @@ export const AddJobs = () => {
 
   const dispatch = useDispatch();
 
-  const { positionForm, companyForm, jobLocationForm, onInputChange } = useForm({
-    positionForm: position || '',
-    companyForm: company || '',
-    jobLocationForm: jobLocation || '',
-  })
+  const onHandleChange = (e) => {
+    e.preventDefault();
+    const name = e.target.name;
+    const value = e.target.value;
+
+    dispatch(handleChange({ name, value }));
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!positionForm || !companyForm || !jobLocationForm) {
+    if (!position || !company || !jobLocation) {
       return toast.error('Please Fill Out All Fields');
     }
+
+    dispatch(createJob({position, company, jobLocation, jobType, status}))
+
   }
 
-  const handleJobInput = () => {
 
-  }
-  // export const FormRow = ({ type, name, value, onInputChange, labelText, placeholder }) => {
 
   return (
     <Wrapper>
       <form className="form" onSubmit={handleSubmit}>
         <h3>{isEditing ? 'edit job' : 'add job'}</h3>
         <div className="form-center">
-        <FormRow
+          <FormRow
             type='text'
-            name='positionForm'
+            name='position'
             labelText='Position'
-            value={positionForm}
-            onInputChange={onInputChange}
+            value={position}
+            onInputChange={onHandleChange}
           />
           <FormRow
             type='text'
-            name='companyForm'
-            labelText='Company'
-            value={companyForm}
-            onInputChange={onInputChange}
+            name='company'
+            labelText='company'
+            value={company}
+            onInputChange={onHandleChange}
           />
           <FormRow
             type='text'
-            name='jobLocationForm'
+            name='jobLocation'
             labelText='Job Location'
-            value={jobLocationForm}
-            onInputChange={onInputChange}
+            value={jobLocation}
+            onInputChange={onHandleChange}
           />
-          <FormRow/>
+
+          <FormRowSelect
+            status={status}
+            name='status'
+            labelText='Status'
+            onHandleChange={onHandleChange}
+            statusOptions={statusOptions}
+          />
+          <FormRowSelect
+            status={jobType}
+            name='jobType'
+            labelText='Job Type'
+            onHandleChange={onHandleChange}
+            statusOptions={jobTypeOptions}
+          />
           <div className="btn-container">
-            <button 
-            className="btn btn-block clear-btn"
-            type="button"
-            onClick={() => console.log('clear values')}
+            <button
+              className="btn btn-block clear-btn"
+              type="button"
+              onClick={() => dispatch( clearValues() )}
             >
               clear
             </button>
-            <button 
-            className="btn btn-block submit-btn"
-            type="submit"
-            onClick={handleSubmit}
-            disabled={isLoading}
+            <button
+              className="btn btn-block submit-btn"
+              type="submit"
+              onClick={handleSubmit}
+              disabled={isLoading}
             >
-              clear
+              submit
             </button>
 
           </div>

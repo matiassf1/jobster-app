@@ -5,3 +5,7 @@ export * from './NavBar';
 export * from './SmallSideBar';
 export * from './NavLinks';
 export * from './FormRowSelect';
+export * from './JobsContainer';
+export * from './SearchContainer';
+export * from './Loading';
+export * from './Job';

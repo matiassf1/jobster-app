@@ -10,9 +10,10 @@ export const userSlice = createSlice({
         user: getUserFromLocalStorage()
     },
     reducers: {
-        logout: (state) => {
+        logout: (state, {payload}) => {
             state.user = null;
             removeUserFromLocalStorage();
+            payload && toast.success(payload);
         },
     },
     extraReducers: {

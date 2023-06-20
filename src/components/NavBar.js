@@ -18,7 +18,7 @@ export const NavBar = () => {
     })
 
     const handleLogout = () => {
-        dispatch(logout());
+        dispatch(logout('You Have Been Logout..'));
         if (isSideBarOpen) dispatch(toggleSideBar());
     }
     return (

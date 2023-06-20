@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { createJob } from './thunks';
+import { createJob, getAllJobs } from './thunks';
+import { hideLoading, showLoading } from './allJobsSlide';
 
 const initialState = {
     isLoading: false,
@@ -32,12 +33,8 @@ export const jobSlice = createSlice({
         [createJob.pending]: (state) => {
             state.isLoading = true;
         },
-        [createJob.fulfilled]: (state, { payload }) => {
+        [createJob.fulfilled]: (state ) => {
             state.isLoading = false;
-            state = {
-                ...state,
-                ...payload
-            }
             toast.success('Job Added Succesfully');
         },
         [createJob.rejected]: (state, { payload }) => {

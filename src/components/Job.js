@@ -5,6 +5,7 @@ import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/Job'
 import { JobInfo } from './JobInfo'
 import moment from 'moment/moment'
+import { deleteJob } from '../store/jobs/thunks'
 
 export const Job = ({
   company,
@@ -31,7 +32,7 @@ export const Job = ({
       </header>
       <div className='content'>
         <div className='content-center'>
-          <JobInfo icon={<FaLocationArrow />}text={jobLocation} />
+          <JobInfo icon={<FaLocationArrow />} text={jobLocation} />
           <JobInfo icon={<FaBriefcase />} text={jobType} />
           <JobInfo icon={<FaCalendarAlt />} text={date} />
           <div className={`status ${status}`}>{status}</div>
@@ -51,7 +52,7 @@ export const Job = ({
             type='button'
             className='btn delete-btn'
             onClick={
-              console.log('delete')
+              () => dispatch(deleteJob(_id))
             }
           >
             Delete

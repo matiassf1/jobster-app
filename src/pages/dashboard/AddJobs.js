@@ -1,7 +1,7 @@
 import { FormRow, FormRowSelect } from "../../components";
 import Wrapper from '../../assets/wrappers/DashboardFormPage';
 import { useSelector, useDispatch } from "react-redux";
-import { clearValues, handleChange } from "../../store/jobs/jobSlide";
+import { clearValues, handleChange } from "../../store/jobs/jobSlice";
 
 import { toast } from 'react-toastify';
 import { createJob } from "../../store/jobs/thunks";

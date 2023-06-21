@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllJobs } from '../store/jobs/thunks';
+import { getAllJobs } from '../store/jobs/allJobsSlice';
 
 import { Job, Loading } from './'
 import Wrapper from '../assets/wrappers/JobsContainer'

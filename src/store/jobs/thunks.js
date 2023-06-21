@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { customFetch } from "../../services/axios";
-import { clearValues } from "./jobSlide";
 import { logout } from "../user/userSlice";
+import { clearValues } from "./jobSlice";
+import { getAllJobs, hideLoading, showLoading } from './allJobsSlice';
 
 export const createJob = createAsyncThunk(
     'job/createJob',
@@ -24,25 +25,30 @@ export const createJob = createAsyncThunk(
     }
 )
 
-export const getAllJobs = createAsyncThunk(
-    'allJobs/getJobs',
-    async (_, thunkAPI) => {
-        let url ='/jobs';
 
+
+export const deleteJob = createAsyncThunk(
+    'job/deleteJob',
+    async (jobId, thunkAPI) => {
+        thunkAPI.dispatch(showLoading());
         try {
-            console.log(thunkAPI.getState().user.user.token);
-            const { data } = await customFetch.get(url, {
+            const { data } = await customFetch.delete(`/jobs/${jobId}`, {
                 headers: {
                     authorization: `Bearer ${thunkAPI.getState().user.user.token}`
                 }
             })
+            thunkAPI.dispatch(getAllJobs());
             return data;
         } catch (error) {
+            thunkAPI.dispatch(hideLoading());
             if (error.response.status === 401) {
                 thunkAPI.dispatch(logout());
-                return thunkAPI.rejectWithValue(`${error.response.data.msg}, Loggin Out...`);
+                return thunkAPI.rejectWithValue('Unauthorized! Loggin Out...');
             }
             return thunkAPI.rejectWithValue(error.response.data.msg);
         }
     }
 )
+
+
+

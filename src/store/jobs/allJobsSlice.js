@@ -1,6 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllJobs } from './thunks';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { customFetch } from "../../services/axios";
+import { logout } from "../user/userSlice";
 import { toast } from 'react-toastify';
+
+export const getAllJobs = createAsyncThunk(
+    'allJobs/getJobs',
+    async (_, thunkAPI) => {
+        let url = '/jobs';
+
+        try {
+            const { data } = await customFetch.get(url, {
+                headers: {
+                    authorization: `Bearer ${thunkAPI.getState().user.user.token}`
+                }
+            })
+            return data;
+        } catch (error) {
+            if (error.response.status === 401) {
+                thunkAPI.dispatch(logout());
+                return thunkAPI.rejectWithValue(`${error.response.data.msg}, Loggin Out...`);
+            }
+            return thunkAPI.rejectWithValue(error.response.data.msg);
+        }
+    }
+)
 
 const initialFilterState = {
     search: '',
@@ -21,7 +45,7 @@ const initialState = {
     ...initialFilterState
 }
 
-export const allJobsSlide = createSlice({
+export const allJobsSlice = createSlice({
     name: 'allJobs',
     initialState,
     reducers: {
@@ -47,4 +71,4 @@ export const allJobsSlide = createSlice({
     }
 });
 
-export const { showLoading, hideLoading } = allJobsSlide.actions;
+export const { showLoading, hideLoading } = allJobsSlice.actions;

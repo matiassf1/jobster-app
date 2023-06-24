@@ -6,6 +6,7 @@ import Wrapper from '../assets/wrappers/Job'
 import { JobInfo } from './JobInfo'
 import moment from 'moment/moment'
 import { deleteJob } from '../store/jobs/thunks'
+import { setEditJob } from '../store/jobs'
 
 export const Job = ({
   company,
@@ -42,7 +43,14 @@ export const Job = ({
             to='/add-job'
             className='btn edit-btn'
             onClick={
-              console.log('edit')
+              () => dispatch(setEditJob({
+                editJobId: _id,
+                company,
+                position,
+                status,
+                jobType,
+                jobLocation,
+              }))
             }
           >
             Edit

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { createJob, deleteJob } from './thunks';
+import { createJob, deleteJob, editJob } from './thunks';
 const initialState = {
     isLoading: false,
     position: '',
     company: '',
     jobLocation: '',
-    jobTypeOptions: ['full-time', 'part-time', 'remote', 'intership'],
+    jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
     jobType: 'full-time',
     statusOptions: ['interview', 'declined', 'pending'],
     status: 'pending',
@@ -25,6 +25,13 @@ export const jobSlice = createSlice({
             return {
                 ...initialState
             }
+        },
+        setEditJob: (state, { payload }) => {
+            return {
+                ...state,
+                isEditing: true,
+                ...payload
+            }
         }
     },
     extraReducers: {
@@ -42,15 +49,26 @@ export const jobSlice = createSlice({
         [deleteJob.pending]: (state) => {
             state.isLoading = true;
         },
-        [deleteJob.fulfilled]: (state, { payload }) => {
+        [deleteJob.fulfilled]: (state) => {
             state.isLoading = false;
-            toast.success(payload);
+            toast.success('Job Deleted...');
         },
         [deleteJob.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            toast.error(payload);
+        },
+        [editJob.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [editJob.fulfilled]: (state) => {
+            state.isLoading = false;
+            toast.success('Job Modified...');
+        },
+        [editJob.rejected]: (state, { payload }) => {
             state.isLoading = false;
             toast.error(payload);
         }
     }
 });
 
-export const { handleChange, clearValues } = jobSlice.actions;
+export const { handleChange, clearValues, setEditJob } = jobSlice.actions;

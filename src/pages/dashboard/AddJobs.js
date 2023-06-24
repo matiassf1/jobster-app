@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearValues, handleChange } from "../../store/jobs/jobSlice";
 
 import { toast } from 'react-toastify';
-import { createJob } from "../../store/jobs/thunks";
+import { createJob, editJob } from "../../store/jobs/thunks";
+import { useEffect } from "react";
 
 export const AddJobs = () => {
 
@@ -20,6 +21,8 @@ export const AddJobs = () => {
     isEditing,
     editJobId
   } = useSelector((store) => store.job)
+
+  const { user } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
 
@@ -38,10 +41,18 @@ export const AddJobs = () => {
       return toast.error('Please Fill Out All Fields');
     }
 
-    dispatch(createJob({position, company, jobLocation, jobType, status}))
+    if (!isEditing) {
+      return dispatch(createJob({ position, company, jobLocation, jobType, status }))
+    }
+    dispatch(editJob({ jobId: editJobId, job: { position, company, jobLocation, jobType, status } }))
 
   }
 
+  useEffect(() => {
+    if (!isEditing) {
+      dispatch(handleChange({ name: 'jobLocation', value: user.jobLocation }))
+    }
+  }, []);
 
 
   return (
@@ -53,21 +64,21 @@ export const AddJobs = () => {
             type='text'
             name='position'
             labelText='Position'
-            value={position}
+            value={position || ''}
             onInputChange={onHandleChange}
           />
           <FormRow
             type='text'
             name='company'
             labelText='company'
-            value={company}
+            value={company || ''}
             onInputChange={onHandleChange}
           />
           <FormRow
             type='text'
             name='jobLocation'
             labelText='Job Location'
-            value={jobLocation}
+            value={jobLocation || ''}
             onInputChange={onHandleChange}
           />
 
@@ -89,7 +100,7 @@ export const AddJobs = () => {
             <button
               className="btn btn-block clear-btn"
               type="button"
-              onClick={() => dispatch( clearValues() )}
+              onClick={() => dispatch(clearValues())}
             >
               clear
             </button>

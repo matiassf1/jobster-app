@@ -41,7 +41,7 @@ export const Register = () => {
     if (!password) {
       toast.error('Please enter a password.');
       return;
-    } 
+    }
     if (!isMember && !name) {
       toast.error('Please enter a name if you are not a member.');
       return;
@@ -104,7 +104,21 @@ export const Register = () => {
         <button type="submit" className="btn btn-block" disabled={isLoading} >
           {isLoading ? 'Loading...' : 'Submit'}
         </button>
-
+        <button
+          type="button"
+          className="btn btn-block btn-hipster"
+          disabled={isLoading}
+          onClick={
+            () => {
+              dispatch(loginUser({
+                email: 'testUser@test.com',
+                password: 'secret'
+              }))
+            }
+          }
+        >
+          {isLoading ? 'Loading...' : 'Demo App'}
+        </button>
         <p>
           {isMember ? 'Not a Member Yet?' : 'Already a Member?'}
           <button className="member-btn" onClick={toggleMember}> {isMember ? 'Register' : 'Login'} </button>

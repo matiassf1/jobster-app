@@ -10,11 +10,25 @@ export const getAllJobs = createAsyncThunk(
         let url = '/jobs';
 
         try {
-            const { data } = await customFetch.get(url, {
-                headers: {
-                    authorization: `Bearer ${thunkAPI.getState().user.user.token}`
-                }
-            })
+            const { data } = await customFetch.get(url)
+            return data;
+        } catch (error) {
+            if (error.response.status === 401) {
+                thunkAPI.dispatch(logout());
+                return thunkAPI.rejectWithValue(`${error.response.data.msg}, Loggin Out...`);
+            }
+            return thunkAPI.rejectWithValue(error.response.data.msg);
+        }
+    }
+)
+
+export const showStats = createAsyncThunk(
+    'allJobs/showStats',
+    async (_, thunkAPI) => {
+        let url = '/jobs/stats';
+
+        try {
+            const { data } = await customFetch.get(url);
             return data;
         } catch (error) {
             if (error.response.status === 401) {
@@ -65,6 +79,18 @@ export const allJobsSlice = createSlice({
             state.jobs = payload.jobs;
         },
         [getAllJobs.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            toast.error(payload);
+        },
+        [showStats.pending]: (state) => {
+            state.isLoading = true;
+        },
+        [showStats.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.stats = payload.defaultStats;
+            state.monthlyApplications = payload.monthlyApplications;
+        },
+        [showStats.rejected]: (state, { payload }) => {
             state.isLoading = false;
             toast.error(payload);
         },

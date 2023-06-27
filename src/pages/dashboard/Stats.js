@@ -5,7 +5,7 @@ import { Loading } from '../../components/Loading';
 import { ChartsContainer, StatsContainer } from '../../components';
 
 export const Stats = () => {
-  const { isLoading, monthyApplications } = useSelector((store) => store.allJobs);
+  const { isLoading, monthlyApplications } = useSelector((store) => store.allJobs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const Stats = () => {
   return (
     <>
       <StatsContainer />
-      {monthyApplications?.lenght > 0 && <ChartsContainer />}
+      {monthlyApplications.length > 0 && <ChartsContainer />}
     </>
   )
 }

@@ -12,3 +12,5 @@ export * from './Job';
 export * from './StatsContainer';
 export * from './ChartsContainer';
 export * from './StatItem';
+export * from './BarChartComponent';
+export * from './AreaChartComponent';

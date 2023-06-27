@@ -9,3 +9,5 @@ export * from './JobsContainer';
 export * from './SearchContainer';
 export * from './Loading';
 export * from './Job';
+export * from './StatsContainer';
+export * from './ChartsContainer';

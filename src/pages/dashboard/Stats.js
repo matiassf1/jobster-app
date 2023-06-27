@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import Wrapper from '../../assets/wrappers/StatsContainer'
 import { useDispatch, useSelector } from 'react-redux'
 import { showStats } from '../../store/jobs/allJobsSlice';
 import { Loading } from '../../components/Loading';
+import { ChartsContainer, StatsContainer } from '../../components';
 
 export const Stats = () => {
   const { isLoading, monthyApplications } = useSelector((store) => store.allJobs);
@@ -10,18 +10,17 @@ export const Stats = () => {
 
   useEffect(() => {
     dispatch(showStats());
-    
+
   }, [])
-  
-  if(isLoading){
+
+  if (isLoading) {
     return <Loading center />
   }
 
   return (
     <>
-      <Wrapper>
-        
-      </Wrapper>
+      <StatsContainer />
+      {monthyApplications.lenght > 0 && <ChartsContainer />}
     </>
   )
 }

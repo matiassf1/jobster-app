@@ -20,7 +20,7 @@ export const Stats = () => {
   return (
     <>
       <StatsContainer />
-      {monthyApplications.lenght > 0 && <ChartsContainer />}
+      {monthyApplications?.lenght > 0 && <ChartsContainer />}
     </>
   )
 }

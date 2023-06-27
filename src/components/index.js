@@ -11,3 +11,4 @@ export * from './Loading';
 export * from './Job';
 export * from './StatsContainer';
 export * from './ChartsContainer';
+export * from './StatItem';

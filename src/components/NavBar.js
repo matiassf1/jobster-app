@@ -5,6 +5,7 @@ import { logout } from '../store/user/userSlice'
 import { Logo } from './Logo'
 import Wrapper from '../assets/wrappers/Navbar'
 import { FaAlignLeft, FaCaretDown, FaUserCircle } from 'react-icons/fa'
+import { clearStore } from '../store/user/thunks'
 
 export const NavBar = () => {
     const [showLogout, setShowLogout] = useState(false);
@@ -18,7 +19,7 @@ export const NavBar = () => {
     })
 
     const handleLogout = () => {
-        dispatch(logout('You Have Been Logout..'));
+        dispatch(clearStore('Logout Sucessful...'));
         if (isSideBarOpen) dispatch(toggleSideBar());
     }
     return (

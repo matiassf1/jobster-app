@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { createJob, deleteJob, editJob } from './thunks';
+import { createJob, deleteJob, editJob } from './jobThunks';
 const initialState = {
     isLoading: false,
     position: '',

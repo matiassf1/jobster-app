@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearValues, handleChange } from "../../store/jobs/jobSlice";
 
 import { toast } from 'react-toastify';
-import { createJob, editJob } from "../../store/jobs/thunks";
+import { createJob, editJob } from "../../store/jobs/jobThunks";
 import { useEffect } from "react";
 
 export const AddJobs = () => {
@@ -87,14 +87,14 @@ export const AddJobs = () => {
             name='status'
             labelText='Status'
             onHandleChange={onHandleChange}
-            statusOptions={statusOptions}
+            listOptions={statusOptions}
           />
           <FormRowSelect
             status={jobType}
             name='jobType'
             labelText='Job Type'
             onHandleChange={onHandleChange}
-            statusOptions={jobTypeOptions}
+            listOptions={jobTypeOptions}
           />
           <div className="btn-container">
             <button

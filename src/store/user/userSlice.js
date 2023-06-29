@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify'
-import { registerUser, loginUser, updateUser } from './thunks';
+import { registerUser, loginUser, updateUser, clearStore } from './thunks';
 import { removeUserFromLocalStorage, getUserFromLocalStorage, addUserToLocalStorage } from '../../utils/localStorage';
+import { clearValues } from '../jobs/jobSlice';
+import { clearValuesSearch } from '../jobs/allJobsSlice';
 
 export const userSlice = createSlice({
     name: 'user',
@@ -10,7 +12,7 @@ export const userSlice = createSlice({
         user: getUserFromLocalStorage()
     },
     reducers: {
-        logout: (state, {payload}) => {
+        logout: (state, { payload }) => {
             state.user = null;
             removeUserFromLocalStorage();
             payload && toast.success(payload);
@@ -56,6 +58,9 @@ export const userSlice = createSlice({
             addUserToLocalStorage(payload);
             toast.success(`${payload.name} your profile have been updated`);
         },
+        [clearStore.rejected]: () => {
+            toast.error('There was an error');
+        }
     }
 });
 

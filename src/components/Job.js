@@ -5,7 +5,7 @@ import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from 'react-icons/fa'
 import Wrapper from '../assets/wrappers/Job'
 import { JobInfo } from './JobInfo'
 import moment from 'moment/moment'
-import { deleteJob } from '../store/jobs/thunks'
+import { deleteJob } from '../store/jobs/jobThunks'
 import { setEditJob } from '../store/jobs'
 
 export const Job = ({

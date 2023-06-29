@@ -3,41 +3,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { customFetch } from "../../services/axios";
 import { logout } from "../user/userSlice";
 import { toast } from 'react-toastify';
+import { getAllJobsThunks, showStatsThunks } from './allJobsThunks';
 
 export const getAllJobs = createAsyncThunk(
     'allJobs/getJobs',
-    async (_, thunkAPI) => {
-        let url = '/jobs';
-
-        try {
-            const { data } = await customFetch.get(url)
-            return data;
-        } catch (error) {
-            if (error.response.status === 401) {
-                thunkAPI.dispatch(logout());
-                return thunkAPI.rejectWithValue(`${error.response.data.msg}, Loggin Out...`);
-            }
-            return thunkAPI.rejectWithValue(error.response.data.msg);
-        }
-    }
+    getAllJobsThunks
 )
 
 export const showStats = createAsyncThunk(
     'allJobs/showStats',
-    async (_, thunkAPI) => {
-        let url = '/jobs/stats';
-
-        try {
-            const { data } = await customFetch.get(url);
-            return data;
-        } catch (error) {
-            if (error.response.status === 401) {
-                thunkAPI.dispatch(logout());
-                return thunkAPI.rejectWithValue(`${error.response.data.msg}, Loggin Out...`);
-            }
-            return thunkAPI.rejectWithValue(error.response.data.msg);
-        }
-    }
+    showStatsThunks
 )
 
 const initialFilterState = {
@@ -68,6 +43,19 @@ export const allJobsSlice = createSlice({
         },
         hideLoading: (state) => {
             state.isLoading = false;
+        },
+        handleChangeSearch: (state, { payload: { name, value } }) => {
+            state.page = 1;
+            state[name] = value;
+        },
+        clearValuesSearch: (state) => {
+            return { ...state, ...initialFilterState }
+        },
+        changePage: (state, { payload }) => {
+            state.page = payload;
+        },
+        clearAllJobsState: (state) => {
+            state = initialState;
         }
     },
     extraReducers: {
@@ -77,6 +65,8 @@ export const allJobsSlice = createSlice({
         [getAllJobs.fulfilled]: (state, { payload }) => {
             state.isLoading = false;
             state.jobs = payload.jobs;
+            state.numOfPages = payload.numOfPages;
+            state.totalJobs = payload.totalJobs;
         },
         [getAllJobs.rejected]: (state, { payload }) => {
             state.isLoading = false;
@@ -97,4 +87,10 @@ export const allJobsSlice = createSlice({
     }
 });
 
-export const { showLoading, hideLoading } = allJobsSlice.actions;
+export const {
+    showLoading,
+    hideLoading,
+    handleChangeSearch,
+    clearValuesSearch,
+    changePage,
+    clearAllJobsState } = allJobsSlice.actions;

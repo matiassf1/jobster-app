@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { customFetch } from "../../services/axios";
 import { logout } from "./userSlice";
+import { clearAllJobsState, clearValuesSearch } from "../jobs/allJobsSlice";
+import { clearValues } from "../jobs/jobSlice";
 
 export const registerUser = createAsyncThunk(
     'user/registerUser',
@@ -37,11 +39,30 @@ export const updateUser = createAsyncThunk(
             });
             return data.user;
         } catch (error) {
-           if (error.response.status === 401) {
+            if (error.response.status === 401) {
                 thunkAPI.dispatch(logout());
                 return thunkAPI.rejectWithValue('Unauthorized! Loggin Out...');
-           }
-           return thunkAPI.rejectWithValue(error.response.data.msg);
+            }
+            return thunkAPI.rejectWithValue(error.response.data.msg);
+        }
+    }
+)
+
+export const clearStore = createAsyncThunk(
+    'user/clearStore',
+    async (message, thunkAPI) => {
+        try {
+            //logout user
+            thunkAPI.dispatch(logout(message));
+            //clear jobs value
+            thunkAPI.dispatch(clearAllJobsState());
+            //clear jobs inputs
+            thunkAPI.dispatch(clearValues());
+            thunkAPI.dispatch(clearValuesSearch());
+
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject();
         }
     }
 )

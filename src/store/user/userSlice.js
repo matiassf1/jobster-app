@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify'
 import { registerUser, loginUser, updateUser, clearStore } from './thunks';
 import { removeUserFromLocalStorage, getUserFromLocalStorage, addUserToLocalStorage } from '../../utils/localStorage';
-import { clearValues } from '../jobs/jobSlice';
-import { clearValuesSearch } from '../jobs/allJobsSlice';
 
 export const userSlice = createSlice({
     name: 'user',

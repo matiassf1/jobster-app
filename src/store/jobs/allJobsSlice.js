@@ -1,7 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { customFetch } from "../../services/axios";
-import { logout } from "../user/userSlice";
 import { toast } from 'react-toastify';
 import { getAllJobsThunks, showStatsThunks } from './allJobsThunks';
 

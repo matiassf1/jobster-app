@@ -52,6 +52,7 @@ export const AddJobs = () => {
     if (!isEditing) {
       dispatch(handleChange({ name: 'jobLocation', value: user.jobLocation }))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

@@ -4,7 +4,6 @@ import Wrapper from '../assets/wrappers/SmallSidebar'
 import { toggleSideBar } from '../store/sideBarSlice';
 
 import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/links';
 
 
 export const SmallSideBar = () => {

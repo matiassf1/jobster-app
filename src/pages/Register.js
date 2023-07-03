@@ -62,7 +62,7 @@ export const Register = () => {
 
   useEffect(() => {
     if (user) navigate('/');
-  }, [user]);
+  }, [navigate, user]);
 
 
   return (

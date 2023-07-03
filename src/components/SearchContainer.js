@@ -27,16 +27,17 @@ export const SearchContainer = () => {
 
   const debounce = () => {
     let timeoutID;
-    return(e) => {
+    return (e) => {
       setLocalSearch(e.target.value);
       clearTimeout(timeoutID);
       timeoutID = setTimeout(() => {
-        dispatch(handleChangeSearch({name:e.target.name, value:e.target.value}))
-      },850)
+        dispatch(handleChangeSearch({ name: e.target.name, value: e.target.value }))
+      }, 850)
 
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const optimizedDebounce = useMemo(() => debounce(), []);
 
   return (
@@ -44,7 +45,7 @@ export const SearchContainer = () => {
       <form className='form' onSubmit={(e) => e.preventDefault()}>
         <h4>Search Form</h4>
         <div className='form-center'>
-        <FormRow
+          <FormRow
             type='text'
             labelText='search'
             name='search'
@@ -59,14 +60,14 @@ export const SearchContainer = () => {
             listOptions={['all', ...statusOptions]}
           />
 
-         <FormRowSelect
+          <FormRowSelect
             labelText='type'
             name='searchType'
             status={searchType}
             onHandleChange={handleSearch}
             listOptions={['all', ...jobTypeOptions]}
           />
-          
+
           <FormRowSelect
             labelText='sort'
             name='sort'
@@ -75,9 +76,9 @@ export const SearchContainer = () => {
             listOptions={['all', ...sortOptions]}
           />
 
-            <button type='button' className='btn btn-block btn-danger' disabled={isLoading} onClick={handleSubmit} >
-              clear filters
-            </button>
+          <button type='button' className='btn btn-block btn-danger' disabled={isLoading} onClick={handleSubmit} >
+            clear filters
+          </button>
         </div>
       </form>
     </Wrapper>

@@ -19,7 +19,7 @@ export const BigSideBar = () => {
             <Logo />
           </header>
           <div className='nav-links'>
-            <NavLinks />
+            <NavLinks toggleSideBar={toggle} />
           </div>
         </div>
       </div>

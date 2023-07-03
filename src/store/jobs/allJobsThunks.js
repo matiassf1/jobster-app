@@ -2,7 +2,6 @@ import { customFetch } from "../../services/axios";
 import { logout } from "../user/userSlice";
 
 export const getAllJobsThunks = async (_, thunkAPI) => {
-
     const {
         page,
         search,
